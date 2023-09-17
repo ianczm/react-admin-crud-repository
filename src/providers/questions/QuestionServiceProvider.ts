@@ -1,5 +1,5 @@
+import QuestionService from "@/services/questions/QuestionService";
 import { createContext } from "react";
-import QuestionService from "./QuestionService";
 
 const QuestionServiceContext = createContext<QuestionService | null>(null);
 

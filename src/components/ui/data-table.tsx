@@ -28,11 +28,12 @@ import {
 
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
 import { DataTableToolbar } from "@/components/ui/data-table-toolbar";
-import { FACETED_FILTERS } from "@/models/Question";
+import { FacetedFilter } from "@/components/ui/data-table-faceted-filter";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  filters: FacetedFilter[];
 }
 
 const INITIAL_PAGE_SIZE = 5;
@@ -40,6 +41,7 @@ const INITIAL_PAGE_SIZE = 5;
 export function DataTable<TData, TValue>({
   columns,
   data,
+  filters,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -81,7 +83,7 @@ export function DataTable<TData, TValue>({
     <div className="space-y-4">
       <DataTableToolbar
         table={table}
-        facetedFilters={FACETED_FILTERS}
+        facetedFilters={filters}
         placeholder="Filter by question title..."
       />
       <div className="rounded-md border">

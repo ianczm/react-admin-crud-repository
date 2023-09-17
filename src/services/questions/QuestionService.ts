@@ -1,4 +1,4 @@
-import { Question } from "@/models/Question";
+import { Question } from "@/models/questions/Question";
 
 export default interface QuestionService {
   // Create [POST]

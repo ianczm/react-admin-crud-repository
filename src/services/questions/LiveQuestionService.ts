@@ -1,4 +1,4 @@
-import { Question } from "@/models/Question";
+import { Question } from "@/models/questions/Question";
 import QuestionService from "./QuestionService";
 import axios, { AxiosRequestConfig } from "axios";
 

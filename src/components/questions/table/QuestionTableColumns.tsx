@@ -11,77 +11,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
-import { FacetedFilter } from "@/components/ui/data-table-faceted-filter";
-import { CircleIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/components/ui/badge";
+import { Question } from "@/models/questions/Question";
 
-export type Question = {
-  id: string;
-  title: string;
-  categories: QuestionCategory[];
-  complexity: QuestionComplexity;
-  link: string;
-  description: string;
-};
-
-export enum QuestionCategory {
-  FUNCTIONAL = "Functional",
-  OBJECT_ORIENTED = "Object-Oriented",
-  MATHEMATICAL = "Mathematical",
-}
-
-export enum QuestionComplexity {
-  EASY = "Easy",
-  MEDIUM = "Medium",
-  HARD = "Hard",
-}
-
-export const FACETED_FILTERS: FacetedFilter[] = [
-  {
-    accessorKey: "category",
-    title: "Category",
-    options: [
-      {
-        value: QuestionCategory.FUNCTIONAL,
-        label: QuestionCategory.FUNCTIONAL,
-        icon: CircleIcon,
-      },
-      {
-        value: QuestionCategory.OBJECT_ORIENTED,
-        label: QuestionCategory.OBJECT_ORIENTED,
-        icon: CircleIcon,
-      },
-      {
-        value: QuestionCategory.MATHEMATICAL,
-        label: QuestionCategory.MATHEMATICAL,
-        icon: CircleIcon,
-      },
-    ],
-  },
-  {
-    accessorKey: "complexity",
-    title: "Complexity",
-    options: [
-      {
-        value: QuestionComplexity.EASY,
-        label: QuestionComplexity.EASY,
-        icon: CircleIcon,
-      },
-      {
-        value: QuestionComplexity.MEDIUM,
-        label: QuestionComplexity.MEDIUM,
-        icon: CircleIcon,
-      },
-      {
-        value: QuestionComplexity.HARD,
-        label: QuestionComplexity.HARD,
-        icon: CircleIcon,
-      },
-    ],
-  },
-];
-
-export const COLUMNS: ColumnDef<Question>[] = [
+const columns: ColumnDef<Question>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => (
@@ -155,3 +88,5 @@ export const COLUMNS: ColumnDef<Question>[] = [
     },
   },
 ];
+
+export default columns;
