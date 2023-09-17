@@ -98,8 +98,8 @@ export const COLUMNS: ColumnDef<Question>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex flex-col gap-1">
-          {row.original.categories.map((category) => (
-            <Badge className="w-max" variant={"secondary"}>
+          {row.original.categories.map((category, idx) => (
+            <Badge key={idx} className="w-max" variant={"secondary"}>
               {category.valueOf()}
             </Badge>
           ))}

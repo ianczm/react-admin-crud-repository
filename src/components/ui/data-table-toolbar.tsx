@@ -36,10 +36,11 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {facetedFilters.map(({ accessorKey, title, options }) => {
+        {facetedFilters.map(({ accessorKey, title, options }, idx) => {
           if (table.getColumn(accessorKey)) {
             return (
               <DataTableFacetedFilter
+                key={idx}
                 column={table.getColumn(accessorKey)}
                 title={title}
                 options={options}
