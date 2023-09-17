@@ -1,36 +1,29 @@
 import { DataTable } from "@/components/ui/data-table";
-import { COLUMNS, Question } from "@/models/Question";
-import QuestionServiceContext from "@/services/QuestionServiceProvider";
-import { useContext, useEffect, useState } from "react";
+import { Question } from "@/models/questions/Question";
+import QuestionServiceContext from "@/providers/questions/QuestionServiceProvider";
+import { useCallback, useContext, useEffect, useState } from "react";
+import columns from "./QuestionTableColumns";
+import facetedFilters from "./QuestionTableFacetedFilters";
 
 export default function QuestionTable() {
   const [data, setData] = useState([] as Question[]);
   const questionService = useContext(QuestionServiceContext);
 
-  async function getQuestions(handlers: {
-    onSuccess: (data: Question[]) => void;
-    onError: (error: unknown) => void;
-    onFinally?: () => void;
-  }) {
-    const { onSuccess, onError } = handlers;
-
+  const getQuestionsCallback = useCallback(async () => {
     try {
-      await questionService?.getQuestions().then(onSuccess);
+      await questionService?.getQuestions().then(setData);
     } catch (err) {
-      onError(err);
+      console.log(err);
     }
-  }
+  }, [questionService]);
 
   useEffect(() => {
-    getQuestions({
-      onSuccess: setData,
-      onError: console.log,
-    });
-  }, []);
+    getQuestionsCallback();
+  }, [getQuestionsCallback]);
 
   return (
     <>
-      <DataTable columns={COLUMNS} data={data} />
+      <DataTable columns={columns} data={data} filters={facetedFilters} />
     </>
   );
 }
