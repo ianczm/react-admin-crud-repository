@@ -96,9 +96,15 @@ export const COLUMNS: ColumnDef<Question>[] = [
       <DataTableColumnHeader column={column} title="Category" />
     ),
     cell: ({ row }) => {
-      return row.original.categories.map((category) => (
-        <Badge variant={"secondary"}>{category.valueOf()}</Badge>
-      ));
+      return (
+        <div className="flex flex-col gap-1">
+          {row.original.categories.map((category) => (
+            <Badge className="w-max" variant={"secondary"}>
+              {category.valueOf()}
+            </Badge>
+          ))}
+        </div>
+      );
     },
     filterFn: "arrIncludes",
     enableColumnFilter: true,
