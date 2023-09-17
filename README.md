@@ -1,3 +1,9 @@
+# React Admin CRUD Page
+
+This is just a side project to learn about React.
+
+![image](https://github.com/ianczm/react-admin-crud-repository/assets/68128992/8d0a5964-6ee9-4f7f-b7ba-529386dbaadb)
+
 # Setup
 
 ## Mockoon
