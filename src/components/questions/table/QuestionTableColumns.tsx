@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
