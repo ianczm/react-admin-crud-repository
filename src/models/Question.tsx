@@ -11,15 +11,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
+import { FacetedFilterOption } from "@/components/ui/data-table-faceted-filter";
+import { CircleIcon } from "@radix-ui/react-icons";
 
 export type Question = {
   id: string;
   title: string;
-  category: string[];
+  category: QuestionCategory[];
   complexity: QuestionComplexity;
   link: string;
   description: string;
 };
+
+export enum QuestionCategory {
+  FUNCTIONAL = "Functional",
+  OBJECT_ORIENTED = "Object-Oriented",
+  MATHEMATICAL = "Mathematical",
+}
 
 export enum QuestionComplexity {
   EASY = "Easy",
@@ -27,11 +35,47 @@ export enum QuestionComplexity {
   HARD = "Hard",
 }
 
+export const FACETED_FILTERS: {
+  Category: FacetedFilterOption[];
+  Complexity: FacetedFilterOption[];
+} = {
+  Category: [
+    {
+      value: QuestionCategory.FUNCTIONAL.toLowerCase(),
+      label: QuestionCategory.FUNCTIONAL,
+      icon: CircleIcon,
+    },
+    {
+      value: QuestionCategory.OBJECT_ORIENTED.toLowerCase(),
+      label: QuestionCategory.OBJECT_ORIENTED,
+      icon: CircleIcon,
+    },
+    {
+      value: QuestionCategory.MATHEMATICAL.toLowerCase(),
+      label: QuestionCategory.MATHEMATICAL,
+      icon: CircleIcon,
+    },
+  ],
+  Complexity: [
+    {
+      value: QuestionComplexity.EASY.toLowerCase(),
+      label: QuestionComplexity.EASY,
+      icon: CircleIcon,
+    },
+    {
+      value: QuestionComplexity.MEDIUM.toLowerCase(),
+      label: QuestionComplexity.MEDIUM,
+      icon: CircleIcon,
+    },
+    {
+      value: QuestionComplexity.HARD.toLowerCase(),
+      label: QuestionComplexity.HARD,
+      icon: CircleIcon,
+    },
+  ],
+};
+
 export const COLUMNS: ColumnDef<Question>[] = [
-  // {
-  //   accessorKey: "id",
-  //   header: "ID",
-  // },
   {
     accessorKey: "title",
     header: ({ column }) => (
@@ -48,12 +92,6 @@ export const COLUMNS: ColumnDef<Question>[] = [
     accessorKey: "complexity",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Complexity" />
-    ),
-  },
-  {
-    accessorKey: "link",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Link" />
     ),
   },
   {
