@@ -1,0 +1,132 @@
+{
+  "uuid": "3a44e28e-7f3a-4c0d-9b2f-675bb7d625d2",
+  "lastMigration": 28,
+  "name": "QuestionService",
+  "endpointPrefix": "",
+  "latency": 1000,
+  "port": 3001,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "85411a31-43e8-401d-b0e2-69fbd597aef4",
+      "type": "crud",
+      "documentation": "",
+      "method": "",
+      "endpoint": "questions",
+      "responses": [
+        {
+          "uuid": "9dede2f7-58b9-41ef-81f0-5c0904fdc189",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "49ea",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        },
+        {
+          "uuid": "ec669caf-0891-4770-bb57-3620907ae36f",
+          "body": "{\n  \"status\": 401,\n  \"message\": \"Unauthorized\"\n}\n",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "header",
+              "modifier": "Authorization",
+              "value": "Bearer apikey",
+              "invert": true,
+              "operator": "equals"
+            },
+            {
+              "target": "header",
+              "modifier": "Authorization",
+              "value": "",
+              "invert": false,
+              "operator": "null"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id"
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "85411a31-43e8-401d-b0e2-69fbd597aef4"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "6582a013-4945-4e73-b280-3cf446429c19",
+      "id": "49ea",
+      "name": "Questions",
+      "documentation": "",
+      "value": "[\n  {{#repeat 50}}\n  {{setVar 'generatedId' (faker 'database.mongodbObjectId')}}\n  {\n    \"id\": \"{{@generatedId}}\",\n    \"title\": \"{{faker 'lorem.sentence'}}\",\n    \"categories\": {{{someOf (array 'Functional' 'Object-Oriented' 'Mathematical') 1 2 true}}},\n    \"complexity\": \"{{oneOf (array 'Easy' 'Medium' 'Hard')}}\",\n    \"link\": \"{{baseUrl}}/questions/{{@generatedId}}\",\n    \"description\": \"{{faker 'lorem.paragraph'}}\"\n  }\n  {{/repeat}}\n]\n"
+    }
+  ]
+}
