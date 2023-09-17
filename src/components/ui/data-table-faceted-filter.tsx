@@ -21,17 +21,23 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 
-interface DataTableFacetedFilter<TData, TValue> {
-  column?: Column<TData, TValue>;
-  title?: string;
-  options: FacetedFilterOption[];
-}
-
 export type FacetedFilterOption = {
   label: string;
   value: string;
   icon?: React.ComponentType<{ className?: string }>;
 };
+
+export type FacetedFilter = {
+  accessorKey: string;
+  title: string;
+  options: FacetedFilterOption[];
+};
+
+interface DataTableFacetedFilter<TData, TValue> {
+  column?: Column<TData, TValue>;
+  title?: string;
+  options?: FacetedFilterOption[];
+}
 
 export function DataTableFacetedFilter<TData, TValue>({
   column,
@@ -66,7 +72,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                   </Badge>
                 ) : (
                   options
-                    .filter((option) => selectedValues.has(option.value))
+                    ?.filter((option) => selectedValues.has(option.value))
                     .map((option) => (
                       <Badge
                         variant="secondary"
@@ -88,7 +94,7 @@ export function DataTableFacetedFilter<TData, TValue>({
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
-              {options.map((option) => {
+              {options?.map((option) => {
                 const isSelected = selectedValues.has(option.value);
                 return (
                   <CommandItem

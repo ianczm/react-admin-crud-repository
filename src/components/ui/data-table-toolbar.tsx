@@ -9,14 +9,12 @@ import { DataTableViewOptions } from "@/components/ui/data-table-view-options";
 
 import {
   DataTableFacetedFilter,
-  FacetedFilterOption,
+  FacetedFilter,
 } from "./data-table-faceted-filter";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
-  facetedFilters: {
-    [columnTitle: string]: FacetedFilterOption[];
-  };
+  facetedFilters: FacetedFilter[];
   placeholder: string;
 }
 
@@ -38,31 +36,17 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {Object.entries(facetedFilters).map(([columnTitle, filters]) => {
-          if (table.getColumn(columnTitle.toLowerCase())) {
+        {facetedFilters.map(({ accessorKey, title, options }) => {
+          if (table.getColumn(accessorKey)) {
             return (
               <DataTableFacetedFilter
-                column={table.getColumn(columnTitle.toLowerCase())}
-                title={columnTitle}
-                options={filters}
+                column={table.getColumn(accessorKey)}
+                title={title}
+                options={options}
               />
             );
           }
         })}
-        {/* {table.getColumn("status") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("status")}
-            title="Status"
-            options={statuses}
-          />
-        )}
-        {table.getColumn("priority") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("priority")}
-            title="Priority"
-            options={priorities}
-          />
-        )} */}
         {isFiltered && (
           <Button
             variant="ghost"

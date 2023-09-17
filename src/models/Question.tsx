@@ -11,13 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
-import { FacetedFilterOption } from "@/components/ui/data-table-faceted-filter";
+import { FacetedFilter } from "@/components/ui/data-table-faceted-filter";
 import { CircleIcon } from "@radix-ui/react-icons";
+import { Badge } from "@/components/ui/badge";
 
 export type Question = {
   id: string;
   title: string;
-  category: QuestionCategory[];
+  categories: QuestionCategory[];
   complexity: QuestionComplexity;
   link: string;
   description: string;
@@ -35,45 +36,50 @@ export enum QuestionComplexity {
   HARD = "Hard",
 }
 
-export const FACETED_FILTERS: {
-  Category: FacetedFilterOption[];
-  Complexity: FacetedFilterOption[];
-} = {
-  Category: [
-    {
-      value: QuestionCategory.FUNCTIONAL.toLowerCase(),
-      label: QuestionCategory.FUNCTIONAL,
-      icon: CircleIcon,
-    },
-    {
-      value: QuestionCategory.OBJECT_ORIENTED.toLowerCase(),
-      label: QuestionCategory.OBJECT_ORIENTED,
-      icon: CircleIcon,
-    },
-    {
-      value: QuestionCategory.MATHEMATICAL.toLowerCase(),
-      label: QuestionCategory.MATHEMATICAL,
-      icon: CircleIcon,
-    },
-  ],
-  Complexity: [
-    {
-      value: QuestionComplexity.EASY.toLowerCase(),
-      label: QuestionComplexity.EASY,
-      icon: CircleIcon,
-    },
-    {
-      value: QuestionComplexity.MEDIUM.toLowerCase(),
-      label: QuestionComplexity.MEDIUM,
-      icon: CircleIcon,
-    },
-    {
-      value: QuestionComplexity.HARD.toLowerCase(),
-      label: QuestionComplexity.HARD,
-      icon: CircleIcon,
-    },
-  ],
-};
+export const FACETED_FILTERS: FacetedFilter[] = [
+  {
+    accessorKey: "category",
+    title: "Category",
+    options: [
+      {
+        value: QuestionCategory.FUNCTIONAL,
+        label: QuestionCategory.FUNCTIONAL,
+        icon: CircleIcon,
+      },
+      {
+        value: QuestionCategory.OBJECT_ORIENTED,
+        label: QuestionCategory.OBJECT_ORIENTED,
+        icon: CircleIcon,
+      },
+      {
+        value: QuestionCategory.MATHEMATICAL,
+        label: QuestionCategory.MATHEMATICAL,
+        icon: CircleIcon,
+      },
+    ],
+  },
+  {
+    accessorKey: "complexity",
+    title: "Complexity",
+    options: [
+      {
+        value: QuestionComplexity.EASY,
+        label: QuestionComplexity.EASY,
+        icon: CircleIcon,
+      },
+      {
+        value: QuestionComplexity.MEDIUM,
+        label: QuestionComplexity.MEDIUM,
+        icon: CircleIcon,
+      },
+      {
+        value: QuestionComplexity.HARD,
+        label: QuestionComplexity.HARD,
+        icon: CircleIcon,
+      },
+    ],
+  },
+];
 
 export const COLUMNS: ColumnDef<Question>[] = [
   {
@@ -81,18 +87,32 @@ export const COLUMNS: ColumnDef<Question>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Title" />
     ),
+    filterFn: "includesString",
+    enableColumnFilter: true,
   },
   {
     accessorKey: "category",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Category" />
     ),
+    cell: ({ row }) => {
+      return row.original.categories.map((category) => (
+        <Badge variant={"secondary"}>{category.valueOf()}</Badge>
+      ));
+    },
+    filterFn: "arrIncludes",
+    enableColumnFilter: true,
   },
   {
     accessorKey: "complexity",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Complexity" />
     ),
+    cell: ({ row }) => {
+      return <Badge>{row.original.complexity}</Badge>;
+    },
+    filterFn: "equalsString",
+    enableColumnFilter: true,
   },
   {
     accessorKey: "description",
