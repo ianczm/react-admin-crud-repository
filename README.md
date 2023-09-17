@@ -1,27 +1,23 @@
-# React + TypeScript + Vite
+# Setup
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Mockoon
 
-Currently, two official plugins are available:
+This acts as a live API server on `localhost:3001` (port can be configured).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Install Mockoon from [here](https://mockoon.com/).
+2. (Optional) Install Postman from [here](https://www.postman.com/).
+3. Inside Mockoon, click `Open environment` and select the file `/mockoon/QuestionService.json`
+4. Once your environment is created, you should see the available routes. You can further configure this, but be sure to commit to the repository so others get the update.
+5. Run your environment by clicking the green play button.
+6. Make a call to Mockoon either from the app (e.g. via Axios), or from Postman.
 
-## Expanding the ESLint configuration
+## React Project
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+This is a React + Vite + TypeScript project, scaffolded using `npx create vite@latest`
 
-- Configure the top-level `parserOptions` property like this:
+Set your terminal's active directory to the root of this project and enter:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```sh
+npm install
+npm run dev
 ```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
